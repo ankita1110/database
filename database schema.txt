@@ -1,0 +1,36 @@
+
+visitor		screen		movie		booking		seat		paymnt 		feedback
+id		    id		    id		    id		    sid		    id		    vid
+name		mid		    name		vid		    catgory		bid		    mid
+email		nsit		duration	mid		    price		type		description
+pno		book_sit		seatid   			totalprice
+		time			time
+		duration		date
+						nsit
+						
+
+									PROJECT MANAGEMENT
+Employee    Manager             Project_management     Technology      Status   Project     Client  Role  Dept
+Eid         M_id                P_id                    Tid             S_id    Pid         cid     Rid   Did
+Name        Eid                 p_name                  Tname           Status title                      Dname
+                                M_id                                            cid                 ROle  Eid
+                                T_id
+                                S_id
+
+
+                                Onilne Exam
+Registration        Exam            Paper           Score
+Uid                 id              pid             sid
+Uname               startTime       Questions       uid
+                    endTime         Ans             score
+                    Pid
+
+                    Online Shopping
+customer    product   stock  category    subcategory  order   payment     shipment
+cid         pid       sid    catId       subcId       oid     pid         sid
+cname       pname     pid    cname       subName      cid     oid         oid
+            price     qty    cdetail     catId        pid     type        type
+            detail                                    qty     amount      status
+            catId                                     total
+            subcId
+            sid

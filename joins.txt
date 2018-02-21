@@ -1,0 +1,306 @@
+joins
+........
+(INNER) JOIN: Returns records that have matching values in both tables
+LEFT (OUTER) JOIN: Return all records from the left table, and the matched records from the right table
+RIGHT (OUTER) JOIN: Return all records from the right table, and the matched records from the left table
+FULL (OUTER) JOIN: Return all records when there is a match in either left or right table
+
+INNER JOIN
+.........
+1)
+
+SELECT Orders.OrderID, Customers.CustomerName
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+select o.oid,c.cname from order o, customer c where o.cid=c.cid;
+
+2)
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ((Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+
+LEFT
+...
+1)
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+RIGHT
+.....
+1)
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+
+FULL
+.....
+1)
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+
+SELF
+....
+1)
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City 
+ORDER BY A.City;
+
+UNION
+.....
+1)
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers
+ORDER BY City;
+
+
+
+CREATE TRIGGER before_employee_update 
+    BEFORE UPDATE ON employees
+    FOR EACH ROW 
+BEGIN
+    INSERT INTO employees_audit
+    SET action = 'update',
+     employeeNumber = OLD.employeeNumber,
+        lastname = OLD.lastname,
+        changedat = NOW(); 
+END$$
+DELIMITER ;
+
+// agrigate
+var MongoClient = require('mongodb').MongoClient;
+
+var url = "mongodb://127.0.0.1:27017/";
+
+
+MongoClient.connect(url, function(err, db)
+ {
+ if (err) throw err;
+ var dbo = db.db("mydb");
+ 
+dbo.collection('orders').aggregate([
+ { $lookup:
+ {
+       
+from: 'products',
+        
+localField: 'product_id',
+       
+ foreignField: '_id',
+        
+as: 'orderdetails'
+      
+}
+  }
+   
+]).toArray(function(err, res)
+ {
+   
+if (err) throw err;
+   
+console.log(JSON.stringify(res));
+  
+ db.close();
+ 
+});
+
+});
+
+
+
+//function
+DELIMITER $$
+CREATE FUNCTION calcProfit(cost FLOAT, price FLOAT) RETURNS DECIMAL(9,2)
+BEGIN
+  DECLARE profit DECIMAL(9,2);
+  SET profit = price-cost;
+  RETURN profit;
+END$$
+DELIMITER ;
+
+lcom114-two@admin MINGW64 /e/github
+$ git config --global user.name "Mohini"
+
+lcom114-two@admin MINGW64 /e/github
+$ git config --global user.email "Mohinipatel@gmail.com"
+
+lcom114-two@admin MINGW64 /e/github
+$ git clone https://github.com/mohini96/mohini.git
+Cloning into 'mohini'...
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (4/4), done.
+
+lcom114-two@admin MINGW64 /e/github
+$ cd master
+bash: cd: master: No such file or directory
+
+lcom114-two@admin MINGW64 /e/github
+$ git checkout master
+fatal: Not a git repository (or any of the parent directories): .git
+
+lcom114-two@admin MINGW64 /e/github
+$ cd mohini
+
+lcom114-two@admin MINGW64 /e/github/mohini (master)
+$ git checkout -b t1
+Switched to a new branch 't1'
+
+lcom114-two@admin MINGW64 /e/github/mohini (t1)
+$ git status
+On branch t1
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+lcom114-two@admin MINGW64 /e/github/mohini (t1)
+$ git add README.md
+
+lcom114-two@admin MINGW64 /e/github/mohini (t1)
+$ git commit -m "t1 modified.."
+[t1 ea1923d] t1 modified..
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+lcom114-two@admin MINGW64 /e/github/mohini (t1)
+$ git push origin t1
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 298 bytes | 298.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/mohini96/mohini.git
+ * [new branch]      t1 -> t1
+
+lcom114-two@admin MINGW64 /e/github/mohini (t1)
+$ cd master
+bash: cd: master: No such file or directory
+
+lcom114-two@admin MINGW64 /e/github/mohini (t1)
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+lcom114-two@admin MINGW64 /e/github/mohini (master)
+$ git checkout -b t2
+Switched to a new branch 't2'
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2)
+$ git add README.md
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2)
+$ git commit -m "t2 modified"
+[t2 30f8f76] t2 modified
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2)
+$ git push origin t2
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 294 bytes | 294.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/mohini96/mohini.git
+ * [new branch]      t2 -> t2
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2)
+$ git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> t2
+
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2)
+$ git merge t1
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2|MERGING)
+$ git status
+On branch t2
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+        both modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2|MERGING)
+$ git add README.md
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2|MERGING)
+$ git status
+On branch t2
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+
+        modified:   README.md
+
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2|MERGING)
+$ git commit -m "Merge successfullyy....."
+[t2 c7b9b5d] Merge successfullyy.....
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2)
+$ git push origin t2
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 348 bytes | 348.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/mohini96/mohini.git
+   30f8f76..c7b9b5d  t2 -> t2
+
+lcom114-two@admin MINGW64 /e/github/mohini (t2)
+$
+
+
+
+key :- http://idea.singee77.com
+
+
+
+
+@foreach($students as $user)
+    <
+    {{$user->name}} 
+@endforeach
+
+
+
+
+
+Task       : Learning Redux & Database
+Work done :-
+    Implemented Display in Grid With Redux
+    Called Api for Dropdown with redux actions
+    Triggers and Procedure in  mysql
+    explored aggregate in mongoDB
+    
+Task Status : On Going - Database
+Issue        : None
